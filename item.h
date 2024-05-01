@@ -1,17 +1,17 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include <stdlib.h>
-#include <map>
-#include <vector>
-using namespace std;
-
+#include <QString>
 class Item
 {
 public:
     Item();
-private:
-
+    int stock;
+    double price;
+    QString category;
+    QString brand;
+    QString image;
+    Item(int s,double p, QString c, QString b);
 };
 
 #endif // ITEM_H

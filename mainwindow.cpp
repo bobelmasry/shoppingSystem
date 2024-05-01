@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "registrationwindow.h"
 #include <QPixmap>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -15,3 +16,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_signup_clicked()
+{
+    hide();
+    Registrationwindow* registrationwindow=new Registrationwindow;
+    registrationwindow->show();
+}
+

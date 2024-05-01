@@ -17,7 +17,7 @@
    <string>AUC Shop</string>
   </property>
   <property name="autoFillBackground">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -122,7 +122,7 @@ color: rgb(80, 80, 80);</string>
       <string>Don't have an account?</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="signup">
      <property name="geometry">
       <rect>
        <x>1220</x>
@@ -142,7 +142,7 @@ text-decoration: underline;
       <string>Sign up now!</string>
      </property>
     </widget>
-    <zorder>pushButton_6</zorder>
+    <zorder>signup</zorder>
     <zorder>logo</zorder>
     <zorder>pushButton_5</zorder>
     <zorder>lineEdit_2</zorder>
