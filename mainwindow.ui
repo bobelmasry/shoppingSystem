@@ -51,7 +51,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/AUC Logo.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="loginButton">
      <property name="geometry">
       <rect>
        <x>1400</x>
@@ -68,7 +68,7 @@ color: rgb(80, 80, 80);</string>
       <string>Log in</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="userNameBox">
      <property name="geometry">
       <rect>
        <x>1180</x>
@@ -89,7 +89,7 @@ color: rgb(80, 80, 80);
       <string>username</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_3">
+    <widget class="QLineEdit" name="passwordBox">
      <property name="geometry">
       <rect>
        <x>1180</x>
@@ -142,12 +142,48 @@ text-decoration: underline;
       <string>Sign up now!</string>
      </property>
     </widget>
+    <widget class="QLabel" name="loginErrorLabel">
+     <property name="geometry">
+      <rect>
+       <x>980</x>
+       <y>50</y>
+       <width>181</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="helloLabel">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>920</x>
+       <y>40</y>
+       <width>241</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
     <zorder>signup</zorder>
     <zorder>logo</zorder>
-    <zorder>pushButton_5</zorder>
-    <zorder>lineEdit_2</zorder>
-    <zorder>lineEdit_3</zorder>
+    <zorder>loginButton</zorder>
+    <zorder>userNameBox</zorder>
+    <zorder>passwordBox</zorder>
     <zorder>label_2</zorder>
+    <zorder>loginErrorLabel</zorder>
+    <zorder>helloLabel</zorder>
    </widget>
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
