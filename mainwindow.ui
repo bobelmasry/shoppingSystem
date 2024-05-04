@@ -176,6 +176,35 @@ text-decoration: underline;
       <string/>
      </property>
     </widget>
+    <widget class="QPushButton" name="manageUsersBtn">
+     <property name="geometry">
+      <rect>
+       <x>930</x>
+       <y>90</y>
+       <width>101</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Manage Users</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="manageProductsBtn">
+     <property name="geometry">
+      <rect>
+       <x>930</x>
+       <y>130</y>
+       <width>101</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Manage Products</string>
+     </property>
+    </widget>
     <zorder>signup</zorder>
     <zorder>logo</zorder>
     <zorder>loginButton</zorder>
@@ -184,6 +213,8 @@ text-decoration: underline;
     <zorder>label_2</zorder>
     <zorder>loginErrorLabel</zorder>
     <zorder>helloLabel</zorder>
+    <zorder>manageUsersBtn</zorder>
+    <zorder>manageProductsBtn</zorder>
    </widget>
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">

@@ -4,7 +4,7 @@
 #include <QPixmap>
 #include <QFile>
 
-QString currentUsername = "";
+QStringList userDetails;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QPixmap pix(":/logo image.png");
     ui->logo->setPixmap(pix.scaled(100,100,Qt::KeepAspectRatio));
+    ui->manageProductsBtn->hide();
+    ui->manageUsersBtn->hide();
 }
 
 MainWindow::~MainWindow()
@@ -50,13 +52,13 @@ void MainWindow::on_loginButton_clicked()
 
     while (!(line = in.readLine()).isNull()) {
         QStringList fields = line.split(',');
+        userDetails = fields;
 
         QString csvUsername = fields[0].trimmed();
         QString csvPassword = fields[1].trimmed();
 
         if (csvUsername == username && csvPassword == password) {
             loggedIn = true;
-            currentUsername = csvUsername;
             break;
         }
     }
@@ -71,12 +73,18 @@ void MainWindow::on_loginButton_clicked()
         ui->loginButton->deleteLater();
         ui->label_2->deleteLater();
         ui->signup->deleteLater();
-        ui->helloLabel->setText("Hello " + currentUsername);
+        ui->helloLabel->setText("Hello " + userDetails[0].trimmed());
 
     } else {
         ui->loginErrorLabel->setText("* Incorrect username or password");
         qDebug() << "Incorrect username or password";
     }
+
+    if (loggedIn && userDetails[2].trimmed() == "TRUE"){
+        ui->manageProductsBtn->show();
+        ui->manageUsersBtn->show();
+    }
+
 }
 
 
