@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>logo image.png</file>
         <file>assets/users.csv</file>
+        <file>assets/products.csv</file>
     </qresource>
 </RCC>
