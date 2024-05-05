@@ -10,7 +10,6 @@ CONFIG += c++17
 
 SOURCES += \
     add_item_window.cpp \
-    item.cpp \
     main.cpp \
     mainwindow.cpp \
     productswindow.cpp \
@@ -19,7 +18,6 @@ SOURCES += \
 
 HEADERS += \
     add_item_window.h \
-    item.h \
     mainwindow.h \
     productswindow.h \
     registrationwindow.h \

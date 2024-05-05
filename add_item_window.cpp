@@ -1,6 +1,6 @@
 #include "add_item_window.h"
 #include "ui_add_item_window.h"
-#include "item.h"
+#include <QFile>
 
 Add_Item_Window::Add_Item_Window(QWidget *parent)
     : QDialog(parent)
@@ -24,13 +24,17 @@ void Add_Item_Window::on_pushButton_clicked()
         ui->all_fields_label->show();
     else
         {
-        Item item(prod_name,stock,price,category,brand);
-        hide();
+        QFile file("D://python_projects//other shit//CS//shoppingSysyte//assets//products.csv");
+        if (file.open(QIODevice::Append | QIODevice::Text)) {
+            QTextStream out(&file);
+            out << prod_name << "," << price << "," << brand << "," << stock << "," << category << "\n";
+            file.close();
+            hide();
+        } else {
+            qDebug() << "Failed to open products.csv for appending:" << file.errorString();
         }
-
-}
-
-
+    }
+        }
 
 
 Add_Item_Window::~Add_Item_Window()
