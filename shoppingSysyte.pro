@@ -9,17 +9,20 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    add_item_window.cpp \
     item.cpp \
     main.cpp \
     mainwindow.cpp \
     registrationwindow.cpp
 
 HEADERS += \
+    add_item_window.h \
     item.h \
     mainwindow.h \
     registrationwindow.h
 
 FORMS += \
+    add_item_window.ui \
     mainwindow.ui \
     registrationwindow.ui
 

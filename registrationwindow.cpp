@@ -8,6 +8,7 @@ Registrationwindow::Registrationwindow(QWidget *parent)
     , ui(new Ui::Registrationwindow)
 {
     ui->setupUi(this);
+    ui->fieldwarning->hide();
 }
 
 Registrationwindow::~Registrationwindow()

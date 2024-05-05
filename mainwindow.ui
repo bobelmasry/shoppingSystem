@@ -179,9 +179,9 @@ text-decoration: underline;
     <widget class="QPushButton" name="manageUsersBtn">
      <property name="geometry">
       <rect>
-       <x>930</x>
-       <y>90</y>
-       <width>101</width>
+       <x>1200</x>
+       <y>30</y>
+       <width>121</width>
        <height>24</height>
       </rect>
      </property>
@@ -195,14 +195,40 @@ text-decoration: underline;
     <widget class="QPushButton" name="manageProductsBtn">
      <property name="geometry">
       <rect>
-       <x>930</x>
-       <y>130</y>
-       <width>101</width>
+       <x>1200</x>
+       <y>70</y>
+       <width>131</width>
        <height>24</height>
       </rect>
      </property>
      <property name="text">
-      <string>Manage Products</string>
+      <string>Add Product</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="incorrect_login">
+     <property name="geometry">
+      <rect>
+       <x>960</x>
+       <y>30</y>
+       <width>221</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;*inccorect username or password&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="delete_prod_button">
+     <property name="geometry">
+      <rect>
+       <x>1200</x>
+       <y>110</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Delete Product</string>
      </property>
     </widget>
     <zorder>signup</zorder>
@@ -215,6 +241,8 @@ text-decoration: underline;
     <zorder>helloLabel</zorder>
     <zorder>manageUsersBtn</zorder>
     <zorder>manageProductsBtn</zorder>
+    <zorder>incorrect_login</zorder>
+    <zorder>delete_prod_button</zorder>
    </widget>
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
@@ -346,7 +374,7 @@ font: 9pt &quot;Segoe UI&quot;;
 border:none;</string>
      </property>
      <property name="text">
-      <string>Bread</string>
+      <string>Grains</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_8">

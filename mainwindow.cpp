@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "registrationwindow.h"
+#include "add_item_window.h"
 #include <QPixmap>
 #include <QFile>
 
@@ -15,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->logo->setPixmap(pix.scaled(100,100,Qt::KeepAspectRatio));
     ui->manageProductsBtn->hide();
     ui->manageUsersBtn->hide();
+    ui->incorrect_login->hide();
+    ui->delete_prod_button->hide();
 }
 
 MainWindow::~MainWindow()
@@ -37,6 +40,8 @@ void MainWindow::on_loginButton_clicked()
 
     if (username.isEmpty() || password.isEmpty()) {
         ui->loginErrorLabel->setText("* Empty username or Password");
+        ui->incorrect_login->show();
+
         return;
     }
 
@@ -67,6 +72,7 @@ void MainWindow::on_loginButton_clicked()
 
     if (loggedIn) {
         ui->loginErrorLabel->setText("");
+        ui->incorrect_login->hide();
         qDebug() << "Logged in successfully!";
         ui->userNameBox->deleteLater();
         ui->passwordBox->deleteLater();
@@ -83,8 +89,16 @@ void MainWindow::on_loginButton_clicked()
     if (loggedIn && userDetails[2].trimmed() == "TRUE"){
         ui->manageProductsBtn->show();
         ui->manageUsersBtn->show();
+        ui->delete_prod_button->show();
     }
 
 }
 
+
+
+void MainWindow::on_manageProductsBtn_clicked()
+{
+    Add_Item_Window* add_item_window=new Add_Item_Window;
+    add_item_window->show();
+}
 

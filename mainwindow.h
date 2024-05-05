@@ -22,6 +22,8 @@ private slots:
 
     void on_loginButton_clicked();
 
+    void on_manageProductsBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
