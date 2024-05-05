@@ -18,7 +18,8 @@ public:
     QString brand;
     QString image;
     QString name;
-    Item(QString n, int s,double p, QString c, QString b);
+    void addItem(QString n, int s,double p, QString c, QString b);
+    Item(QString n, int s, double p, QString c, QString b);
     Item();
 
 

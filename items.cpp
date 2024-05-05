@@ -9,12 +9,23 @@ vector<Item> Item::items;
 
 Item::Item()
 {
-    qDebug()<<"succesfully added Item to list"<<Qt::endl;
+
 }
 
-
-Item::Item(QString n, int s, double p, QString c, QString b) : stock(s), price(p), category(c), brand(b), name(n)
+Item::Item(QString n, int s, double p, QString c, QString b):stock(s),price(p),category(c),brand(b),name(n)
 {
+    items.push_back(*this);
+    qDebug()<<"pushed in an item in the list, called paramterized const"<<Qt::endl;
+}
+
+void Item::addItem(QString n, int s, double p, QString c, QString b)
+{
+    stock=s;
+    price=p;
+    category=c;
+    brand=b;
+    name=n;
+
     // Get the desktop directory path
     QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
@@ -23,48 +34,17 @@ Item::Item(QString n, int s, double p, QString c, QString b) : stock(s), price(p
 
     QFile file(filePath);
 
-    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
-    {
+    file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+
         QTextStream out(&file);
         out << n << "," << s << "," << p << "," << c << "," << b << Qt::endl;
 
-        if (out.status() != QTextStream::Ok)
-        {
-            qWarning() << "Error writing data to file:" << out.status();
-        }
-        else
-        {
-            qDebug() << "Data successfully written to file.";
-        }
-    }
-    else
-    {
-        qWarning() << "Failed to open file for writing:" << file.errorString();
-    }
+        qDebug()<<"added an Item"<<Qt::endl;
 
     file.close();
+
 }
 
-
-QString Item::getName()  {
-    return name;
-}
-
-double Item::getPrice()  {
-    return price;
-}
-
-QString Item::getBrand()  {
-    return brand;
-}
-
-int Item::getQuantity()  {
-    return stock;
-}
-
-QString Item::getCategory()  {
-    return category;
-}
 
 vector<Item> readProductsFromFile()
 {
@@ -92,11 +72,15 @@ vector<Item> readProductsFromFile()
         if (fields.size() == 5) {
             QString name = fields[0];
             double price = fields[1].toDouble();
-            int quantity = fields[4].toInt();
-            QString category = fields[3];
-            QString brand = fields[2].trimmed();
-            Item product(name, quantity, price, category, brand);
-            products.push_back(product);
+            int quantity = fields[3].toInt(); // Changed index from 3 to 1
+            QString category = fields[4]; // Changed index from 4 to 3
+            QString brand = fields[2].trimmed(); // Changed index from 2 to 4
+
+            // Create an Item object using the constructor
+            Item item(name, price, quantity, category, brand);
+            products.push_back(item);
+        } else {
+            qDebug() << "Invalid line format:" << line;
         }
     }
 
@@ -106,6 +90,28 @@ vector<Item> readProductsFromFile()
 
 
 
+
+//////////the getters
+
+QString Item::getName()  {
+    return name;
+}
+
+double Item::getPrice()  {
+    return price;
+}
+
+QString Item::getBrand()  {
+    return brand;
+}
+
+int Item::getQuantity()  {
+    return stock;
+}
+
+QString Item::getCategory()  {
+    return category;
+}
 
 ///////////////////////////the sorters
 
@@ -233,7 +239,7 @@ void Item::frozen()
 void Item::printitems() {
     for (auto& item : items)
     {
-        qDebug()<< item.category<<item.brand << Qt::endl;
+        qDebug()<< item.getName()<<item.getPrice()<<item.getBrand()<<item.getCategory()<<item.stock<< Qt::endl;
     }
 }
 

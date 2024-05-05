@@ -7,6 +7,7 @@
 #include <QPixmap>
 #include <QFile>
 #include <items.h>
+#include <shelf.h>
 
 QStringList userDetails;
 
@@ -21,8 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->manageUsersBtn->hide();
     ui->incorrect_login->hide();
     ui->delete_prod_button->hide();
-    Item::items=readProductsFromFile();
-    Item::sort_by_price();
+    ui->cart->hide();
+    readProductsFromFile();
+    setButtonNames(this);
+    Item::printitems();
 
 }
 
@@ -69,17 +72,24 @@ void MainWindow::on_loginButton_clicked()
 
         QString csvUsername = fields[0].trimmed();
         QString csvPassword = fields[1].trimmed();
+        QString User = fields[2].trimmed(); // Assuming user type is stored in the third field
 
         if (csvUsername == username && csvPassword == password) {
             loggedIn = true;
+            if (User == "admin") {
+                ui->manageProductsBtn->show();
+                ui->manageUsersBtn->show();
+                ui->delete_prod_button->show();
+            } else {
+                ui->cart->show();
+            }
             break;
         }
     }
 
     file.close();
 
-    if (loggedIn)
-    {
+    if (loggedIn) {
         ui->incorrect_login->hide();
         qDebug() << "Logged in successfully!";
         ui->userNameBox->deleteLater();
@@ -88,23 +98,11 @@ void MainWindow::on_loginButton_clicked()
         ui->label_2->deleteLater();
         ui->signup->deleteLater();
         ui->helloLabel->setText("Hello " + username);
-        ui->manageProductsBtn->show();
-        ui->manageUsersBtn->show();
-        ui->delete_prod_button->show();
-
-    }
-    else
-    {
+    } else {
         ui->incorrect_login->show();
         qDebug() << "Incorrect username or password";
     }
-
-
-
-
-
 }
-
 
 
 void MainWindow::on_manageProductsBtn_clicked()
@@ -126,7 +124,8 @@ void MainWindow::on_sort_clicked()
 {
 
     sort_type=ui->sort_type->currentText();
-    Item::printitems();
+    Item::items.clear();
+    readProductsFromFile();
 
     if(sort_type=="price")
         Item::sort_by_price();
@@ -135,6 +134,8 @@ void MainWindow::on_sort_clicked()
     if(sort_type=="name")
         Item::sort_by_name();
 
+     setButtonNames(this);
+
 }
 
 
@@ -142,12 +143,17 @@ void MainWindow::on_sort_clicked()
 
 void MainWindow::on_fruit_category_clicked()
 {
+    Item::items.clear();
+    readProductsFromFile();
     Item::fruit();
 }
 
 
 void MainWindow::on_meat_category_clicked()
 {
+
+    Item::items.clear();
+    readProductsFromFile();
     Item::meat();
 
 }
@@ -155,36 +161,48 @@ void MainWindow::on_meat_category_clicked()
 
 void MainWindow::on_dairy_category_clicked()
 {
+    Item::items.clear();
+    readProductsFromFile();
     Item::dairy();
 }
 
 
 void MainWindow::on_grains_category_clicked()
 {
+    Item::items.clear();
+    readProductsFromFile();
     Item::grain();
 }
 
 
 void MainWindow::on_desert_category_clicked()
 {
+    Item::items.clear();
+    readProductsFromFile();
     Item::desert();
 }
 
 
 void MainWindow::on_frozen_category_clicked()
 {
+    Item::items.clear();
+    readProductsFromFile();
     Item::frozen();
 }
 
 
 void MainWindow::on_drinks_category_clicked()
 {
+    Item::items.clear();
+    readProductsFromFile();
     Item::drinks();
 }
 
 
 void MainWindow::on_all_categories_clicked()
 {
+    Item::items.clear();
+    readProductsFromFile();
     readProductsFromFile();
 }
 

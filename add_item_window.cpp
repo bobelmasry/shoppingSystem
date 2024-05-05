@@ -1,6 +1,7 @@
 #include "add_item_window.h"
 #include "qstandardpaths.h"
 #include "ui_add_item_window.h"
+#include <QFileDialog>
 #include <QFile>
 
 Add_Item_Window::Add_Item_Window(QWidget *parent)
@@ -19,7 +20,7 @@ void Add_Item_Window::on_pushButton_clicked()
     price = ui->prod_price->value();
     brand = ui->brand_name->text();
     stock = ui->stock_count->value();
-    category = ui->category->currentText();
+    category = ui->category->currentText(); 
 
     if (prod_name.isEmpty() || price == 0 || brand.isEmpty() || stock == 0 || category == "---") {
         ui->all_fields_label->show();
@@ -41,6 +42,8 @@ void Add_Item_Window::on_pushButton_clicked()
         }
     }
 }
+
+
 
 
 Add_Item_Window::~Add_Item_Window()

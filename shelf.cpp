@@ -1,22 +1,40 @@
 #include "shelf.h"
 #include "items.h"
+#include <QPushButton>
+#include "mainwindow.h"
 
 map<pair<int, int>, vector<Item>> Shelf::shelf;
 
+
 Shelf::Shelf()
 {
-
     int items_placed = 0;
 
     for (const auto& item : Item::items) {
-        int row = items_placed / 5;
-        int col = items_placed % 5;
-        shelf[{row, col}].push_back(item);
-
-
+        int row = items_placed / 7;
+        int col = items_placed % 7;
+        shelf[{row, col}] = {item};
         ++items_placed;
     }
+}
 
-
-
+void setButtonNames(MainWindow *mainWindow) {
+    int index = 0; // Index for accessing items in the Item::items list
+    for (int row = 0; row < 5; ++row) {
+        for (int col = 0; col < 7; ++col) {
+            QString buttonName = "p" + QString::number(row) + QString::number(col); // Button name format
+            QPushButton *button = mainWindow->findChild<QPushButton*>(buttonName); // Find the button by name
+            if (button) {
+                if (index < Item::items.size()) {
+                    QString itemName = Item::items[index].getName();
+                    qDebug() << "Setting text for button" << buttonName << "to item name:" << itemName;
+                    button->setText(itemName);
+                } else {
+                    // If no more items in the list, set empty text
+                    button->setText("");
+                }
+                ++index; // Move to the next item index
+            }
+        }
+    }
 }

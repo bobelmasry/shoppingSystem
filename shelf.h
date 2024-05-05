@@ -1,6 +1,7 @@
 #ifndef SHELF_H
 #define SHELF_H
 
+#include "mainwindow.h"
 #include <map>
 #include <vector>
 using namespace std;
@@ -15,6 +16,9 @@ public:
     static map<pair<int, int>, vector<Item>> shelf;
 
 
+
 };
+
+void setButtonNames(MainWindow *mainWindow);
 
 #endif // SHELF_H
