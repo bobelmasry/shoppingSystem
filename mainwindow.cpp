@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "qstandardpaths.h"
 #include "ui_mainwindow.h"
 #include "registrationwindow.h"
 #include "userwindow.h"
@@ -32,7 +33,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_signup_clicked()
 {
-    hide();
     Registrationwindow* registrationwindow=new Registrationwindow;
     registrationwindow->show();
 }
@@ -44,15 +44,19 @@ void MainWindow::on_loginButton_clicked()
     QString password = ui->passwordBox->text();
 
     if (username.isEmpty() || password.isEmpty()) {
-        ui->loginErrorLabel->setText("* Empty username or Password");
         ui->incorrect_login->show();
-
         return;
     }
 
-    QFile file(":/assets/users.csv");
+    // Get the desktop directory path
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+    // Create the full file path
+    QString filePath = desktopDir + "/users.txt";
+
+    QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Failed to open users.csv for reading:" << file.errorString();
+        qDebug() << "Failed to open users.txt for reading:" << file.errorString();
         return;
     }
 
@@ -62,7 +66,6 @@ void MainWindow::on_loginButton_clicked()
 
     while (!(line = in.readLine()).isNull()) {
         QStringList fields = line.split(',');
-        userDetails = fields;
 
         QString csvUsername = fields[0].trimmed();
         QString csvPassword = fields[1].trimmed();
@@ -75,8 +78,8 @@ void MainWindow::on_loginButton_clicked()
 
     file.close();
 
-    if (loggedIn) {
-        ui->loginErrorLabel->setText("");
+    if (loggedIn)
+    {
         ui->incorrect_login->hide();
         qDebug() << "Logged in successfully!";
         ui->userNameBox->deleteLater();
@@ -84,18 +87,21 @@ void MainWindow::on_loginButton_clicked()
         ui->loginButton->deleteLater();
         ui->label_2->deleteLater();
         ui->signup->deleteLater();
-        ui->helloLabel->setText("Hello " + userDetails[0].trimmed());
-
-    } else {
-        ui->loginErrorLabel->setText("* Incorrect username or password");
-        qDebug() << "Incorrect username or password";
-    }
-
-    if (loggedIn && userDetails[2].trimmed() == "TRUE"){
+        ui->helloLabel->setText("Hello " + username);
         ui->manageProductsBtn->show();
         ui->manageUsersBtn->show();
         ui->delete_prod_button->show();
+
     }
+    else
+    {
+        ui->incorrect_login->show();
+        qDebug() << "Incorrect username or password";
+    }
+
+
+
+
 
 }
 
@@ -120,6 +126,7 @@ void MainWindow::on_sort_clicked()
 {
 
     sort_type=ui->sort_type->currentText();
+    Item::printitems();
 
     if(sort_type=="price")
         Item::sort_by_price();
@@ -129,4 +136,64 @@ void MainWindow::on_sort_clicked()
         Item::sort_by_name();
 
 }
+
+
+//////sorting by categories
+
+void MainWindow::on_fruit_category_clicked()
+{
+    Item::fruit();
+}
+
+
+void MainWindow::on_meat_category_clicked()
+{
+    Item::meat();
+
+}
+
+
+void MainWindow::on_dairy_category_clicked()
+{
+    Item::dairy();
+}
+
+
+void MainWindow::on_grains_category_clicked()
+{
+    Item::grain();
+}
+
+
+void MainWindow::on_desert_category_clicked()
+{
+    Item::desert();
+}
+
+
+void MainWindow::on_frozen_category_clicked()
+{
+    Item::frozen();
+}
+
+
+void MainWindow::on_drinks_category_clicked()
+{
+    Item::drinks();
+}
+
+
+void MainWindow::on_all_categories_clicked()
+{
+    readProductsFromFile();
+}
+
+
+
+
+
+
+
+
+
 

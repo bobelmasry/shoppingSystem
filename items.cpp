@@ -1,4 +1,5 @@
 #include "items.h"
+#include "qstandardpaths.h"
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
@@ -6,11 +7,23 @@ using namespace std;
 
 vector<Item> Item::items;
 
+Item::Item()
+{
+    qDebug()<<"succesfully added Item to list"<<Qt::endl;
+}
+
+
 Item::Item(QString n, int s, double p, QString c, QString b) : stock(s), price(p), category(c), brand(b), name(n)
 {
-    QFile file(":/assets/products.csv");
+    // Get the desktop directory path
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    // Create the full file path
+    QString filePath = desktopDir + "/products.txt";
+
+    QFile file(filePath);
+
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
     {
         QTextStream out(&file);
         out << n << "," << s << "," << p << "," << c << "," << b << Qt::endl;
@@ -31,6 +44,7 @@ Item::Item(QString n, int s, double p, QString c, QString b) : stock(s), price(p
 
     file.close();
 }
+
 
 QString Item::getName()  {
     return name;
@@ -56,14 +70,21 @@ vector<Item> readProductsFromFile()
 {
     vector<Item> products;
 
-    QFile file(":/assets/products.csv");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    // Get the desktop directory path
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+    // Create the full file path
+    QString filePath = desktopDir + "/products.txt";
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         qDebug() << "Failed to open file:" << file.errorString();
         return products;
     }
 
     QTextStream in(&file);
-    in.readLine();
+    in.readLine(); // Skip header line
 
     while (!in.atEnd()) {
         QString line = in.readLine();
@@ -71,18 +92,18 @@ vector<Item> readProductsFromFile()
         if (fields.size() == 5) {
             QString name = fields[0];
             double price = fields[1].toDouble();
-            QString brand = fields[2];
-            int quantity = fields[3].toInt();
-            QString category = fields[4];
-            Item product(name, price,quantity,brand, category);
+            int quantity = fields[4].toInt();
+            QString category = fields[3];
+            QString brand = fields[2].trimmed();
+            Item product(name, quantity, price, category, brand);
             products.push_back(product);
         }
     }
 
-
     file.close();
     return products;
 }
+
 
 
 
@@ -194,6 +215,26 @@ void Item::desert()
     }
 
     items = filteredItems;
+}
+
+void Item::frozen()
+{
+    vector<Item> filteredItems;
+
+    for (auto& item : items) {
+        if (item.getCategory() == "Frozen Food") {
+            filteredItems.push_back(item);
+        }
+    }
+
+    items = filteredItems;
+}
+
+void Item::printitems() {
+    for (auto& item : items)
+    {
+        qDebug()<< item.category<<item.brand << Qt::endl;
+    }
 }
 
 

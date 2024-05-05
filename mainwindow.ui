@@ -105,6 +105,9 @@ color: rgb(80, 80, 80);
       <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(80, 80, 80);</string>
      </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
+     </property>
      <property name="placeholderText">
       <string>password</string>
      </property>
@@ -142,26 +145,13 @@ text-decoration: underline;
       <string>Sign up now!</string>
      </property>
     </widget>
-    <widget class="QLabel" name="loginErrorLabel">
-     <property name="geometry">
-      <rect>
-       <x>980</x>
-       <y>50</y>
-       <width>181</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QLabel" name="helloLabel">
      <property name="enabled">
       <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
-       <x>920</x>
+       <x>1240</x>
        <y>40</y>
        <width>241</width>
        <height>51</height>
@@ -179,7 +169,7 @@ text-decoration: underline;
     <widget class="QPushButton" name="manageUsersBtn">
      <property name="geometry">
       <rect>
-       <x>1200</x>
+       <x>1010</x>
        <y>30</y>
        <width>121</width>
        <height>24</height>
@@ -195,7 +185,7 @@ text-decoration: underline;
     <widget class="QPushButton" name="manageProductsBtn">
      <property name="geometry">
       <rect>
-       <x>1200</x>
+       <x>1010</x>
        <y>70</y>
        <width>131</width>
        <height>24</height>
@@ -221,7 +211,7 @@ text-decoration: underline;
     <widget class="QPushButton" name="delete_prod_button">
      <property name="geometry">
       <rect>
-       <x>1200</x>
+       <x>1010</x>
        <y>110</y>
        <width>131</width>
        <height>21</height>
@@ -231,18 +221,17 @@ text-decoration: underline;
       <string>Delete Product</string>
      </property>
     </widget>
+    <zorder>helloLabel</zorder>
     <zorder>signup</zorder>
     <zorder>logo</zorder>
     <zorder>loginButton</zorder>
-    <zorder>userNameBox</zorder>
-    <zorder>passwordBox</zorder>
     <zorder>label_2</zorder>
-    <zorder>loginErrorLabel</zorder>
-    <zorder>helloLabel</zorder>
-    <zorder>manageUsersBtn</zorder>
     <zorder>manageProductsBtn</zorder>
     <zorder>incorrect_login</zorder>
     <zorder>delete_prod_button</zorder>
+    <zorder>userNameBox</zorder>
+    <zorder>passwordBox</zorder>
+    <zorder>manageUsersBtn</zorder>
    </widget>
    <widget class="QLineEdit" name="search_bar">
     <property name="geometry">
@@ -411,6 +400,24 @@ border:none;</string>
      </property>
      <property name="text">
       <string>Frozen Food</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="all_categories">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>330</y>
+       <width>83</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(106, 106, 106);
+font: 9pt &quot;Segoe UI&quot;;
+border:none;</string>
+     </property>
+     <property name="text">
+      <string>All</string>
      </property>
     </widget>
    </widget>

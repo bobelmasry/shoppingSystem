@@ -1,6 +1,7 @@
 #ifndef SHELF_H
 #define SHELF_H
 
+#include <map>
 #include <vector>
 using namespace std;
 #include "items.h"
@@ -11,7 +12,7 @@ class Shelf
 {
 public:
     Shelf();
-    vector<vector<Item>>shelf;
+    static map<pair<int, int>, vector<Item>> shelf;
 
 
 };

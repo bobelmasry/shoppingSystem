@@ -28,6 +28,30 @@ private slots:
 
     void on_sort_clicked();
 
+    void on_fruit_category_clicked();
+
+    void on_meat_category_clicked();
+
+
+    void on_dairy_category_clicked();
+
+
+    void on_grains_category_clicked();
+
+
+    void on_desert_category_clicked();
+
+
+    void on_frozen_category_clicked();
+
+
+    void on_drinks_category_clicked();
+
+
+    void on_all_categories_clicked();
+
+
+
 private:
     Ui::MainWindow *ui;
     QString sort_type;

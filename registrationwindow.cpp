@@ -1,14 +1,19 @@
 #include "registrationwindow.h"
 #include "ui_registrationwindow.h"
+#include "mainwindow.h"
 #include <QDebug>
 #include <QFile>
+#include <QStandardPaths>
+#include <QDir>
 
 Registrationwindow::Registrationwindow(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Registrationwindow)
 {
     ui->setupUi(this);
+    ui->passwarning->hide();
     ui->fieldwarning->hide();
+    ui->userwarning->hide();
 }
 
 Registrationwindow::~Registrationwindow()
@@ -16,65 +21,88 @@ Registrationwindow::~Registrationwindow()
     delete ui;
 }
 
-void Registrationwindow::on_registerButton_clicked()
+
+bool Registrationwindow::usernameExists(const QString &username)
 {
-    QString username = ui->usernameedit->text();
-    QString pass1 = ui->passwordedit->text();
-    QString pass2 = ui->retypeedit->text();
-    qDebug() << pass1 << "\n";
-    qDebug() << pass2 << "\n";
-    if (pass1 != pass2){
-        ui->matchingwarning->setText("* Not Matching");
+    // Get the desktop directory path
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+    // Create the full file path
+    QString filePath = desktopDir + "/users.txt";
+
+    // Open the file for reading
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Error: Could not open file for reading -" << file.errorString();
+        return false;
     }
 
-    // Open the users.csv file for reading
-    QFile file(":/assets/users.csv");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Failed to open users.csv for reading:" << file.errorString();
-        return;
-    }
-
+    // Read from the file and check if the username exists
     QTextStream in(&file);
-    bool usernameExists = false;
-    while (!in.atEnd()) {
+    while (!in.atEnd())
+    {
         QString line = in.readLine();
-        qDebug() << line << "\n";
-        QStringList fields = line.split(',');
-        if (fields.size() > 0 && fields[0] == username) {
-            // Username already exists
-            usernameExists = true;
-            break;
+        QStringList parts = line.split(',');
+        QString m_username = parts.at(0).trimmed();
+        // Case-insensitive comparison
+        if (m_username.compare(username, Qt::CaseInsensitive) == 0)
+        {
+            file.close();
+            return true;
         }
     }
 
     file.close();
-
-    if (usernameExists) {
-        // Username already exists, display a warning
-        ui->alreadywarning->setText("* Username already taken");
-        return;
-    }
-    else if (pass1 == pass2) {
-        ui->alreadywarning->setText("");
-        QFile file("D://python_projects//other shit//CS//shoppingSysyte//assets//users.csv");
-        file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
-
-        if (!file.isOpen()) {
-            qDebug() << "Failed to open users.csv for appending:" << file.errorString();
-            return;
-        }
-
-        QTextStream out(&file);
-        out << username << "," << pass1 << ",FALSE" << ",\"\"\"\"\"\"" << "\n";
-        file.close();
-        qDebug() << "User added successfully.";
-
-        // Clear input fields after successful registration
-        ui->usernameedit->clear();
-        ui->passwordedit->clear();
-        ui->retypeedit->clear();
-    }
-
-
+    return false;
 }
 
+
+
+void Registrationwindow::on_registerButton_clicked()
+{
+    QString username = ui->usernameedit->text().trimmed(); // Trimmed username
+    QString pass1 = ui->passwordedit->text();
+    QString pass2 = ui->retypeedit->text();
+
+    // Check for empty username
+    if (username.isEmpty()) {
+        ui->fieldwarning->show();
+        return;
+    }
+
+    // Check for duplicate username
+    if (usernameExists(username)) {
+        ui->userwarning->show();
+        return;
+    }
+
+    // Check for matching passwords
+    if (pass1 != pass2) {
+        ui->passwarning->show();
+        return;
+    }
+
+    // Get the desktop directory path
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+    // Create the full file path
+    QString filePath = desktopDir + "/users.txt";
+
+    // Open the file for appending
+    QFile file(filePath);
+    if (!file.open(QIODevice::Append | QIODevice::Text))
+    {
+        qDebug() << "Error: Could not open file for writing -" << file.errorString();
+        return;
+    }
+
+    // Write username and password to the file
+    QTextStream out(&file);
+    out << username << "," << pass1 << "\n";
+    file.close();
+
+    hide();
+    MainWindow* main = new MainWindow;
+    main->show();
+}

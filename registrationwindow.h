@@ -15,11 +15,15 @@ public:
     explicit Registrationwindow(QWidget *parent = nullptr);
     ~Registrationwindow();
 
+
 private slots:
     void on_registerButton_clicked();
 
 private:
     Ui::Registrationwindow *ui;
+    bool usernameExists(const QString &username);
+
+
 };
 
 #endif // REGISTRATIONWINDOW_H

@@ -12,7 +12,6 @@ public:
 
 
     //the struct of Item
-    Item();
     int stock;
     double price;
     QString category;
@@ -20,6 +19,7 @@ public:
     QString image;
     QString name;
     Item(QString n, int s,double p, QString c, QString b);
+    Item();
 
 
 
@@ -51,6 +51,11 @@ public:
 
     //the items in an array
     static vector<Item>items;
+
+    static void printitems();
+
+
+
 
 };
 
