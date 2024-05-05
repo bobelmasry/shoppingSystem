@@ -13,18 +13,24 @@ SOURCES += \
     item.cpp \
     main.cpp \
     mainwindow.cpp \
-    registrationwindow.cpp
+    productswindow.cpp \
+    registrationwindow.cpp \
+    userwindow.cpp
 
 HEADERS += \
     add_item_window.h \
     item.h \
     mainwindow.h \
-    registrationwindow.h
+    productswindow.h \
+    registrationwindow.h \
+    userwindow.h
 
 FORMS += \
     add_item_window.ui \
     mainwindow.ui \
-    registrationwindow.ui
+    productswindow.ui \
+    registrationwindow.ui \
+    userwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

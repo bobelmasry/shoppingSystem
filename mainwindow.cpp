@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "registrationwindow.h"
-#include "add_item_window.h"
+#include "productswindow.h"
+#include "userwindow.h".h"
 #include <QPixmap>
 #include <QFile>
 
@@ -98,7 +99,18 @@ void MainWindow::on_loginButton_clicked()
 
 void MainWindow::on_manageProductsBtn_clicked()
 {
-    Add_Item_Window* add_item_window=new Add_Item_Window;
-    add_item_window->show();
+    hide();
+    productsWindow* productWindow=new productsWindow;
+    productWindow->show();
+
+}
+
+
+void MainWindow::on_manageUsersBtn_clicked()
+{
+    hide();
+    userWindow* user_window=new userWindow;
+    user_window->show();
+
 }
 
