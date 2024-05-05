@@ -10,17 +10,21 @@ CONFIG += c++17
 
 SOURCES += \
     add_item_window.cpp \
+    items.cpp \
     main.cpp \
     mainwindow.cpp \
     productswindow.cpp \
     registrationwindow.cpp \
+    shelf.cpp \
     userwindow.cpp
 
 HEADERS += \
     add_item_window.h \
+    items.h \
     mainwindow.h \
     productswindow.h \
     registrationwindow.h \
+    shelf.h \
     userwindow.h
 
 FORMS += \

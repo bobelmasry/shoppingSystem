@@ -1,11 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "registrationwindow.h"
-#include "productswindow.h"
 #include "userwindow.h"
 #include "add_item_window.h"
 #include <QPixmap>
 #include <QFile>
+#include <items.h>
 
 QStringList userDetails;
 
@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->manageUsersBtn->hide();
     ui->incorrect_login->hide();
     ui->delete_prod_button->hide();
+    Item::items=readProductsFromFile();
+    Item::sort_by_price();
+
 }
 
 MainWindow::~MainWindow()
@@ -100,7 +103,6 @@ void MainWindow::on_loginButton_clicked()
 
 void MainWindow::on_manageProductsBtn_clicked()
 {
-    hide();
     Add_Item_Window* itemWindow=new Add_Item_Window;
     itemWindow->show();
 
@@ -109,9 +111,22 @@ void MainWindow::on_manageProductsBtn_clicked()
 
 void MainWindow::on_manageUsersBtn_clicked()
 {
-    hide();
     userWindow* user_window=new userWindow;
     user_window->show();
+
+}
+
+void MainWindow::on_sort_clicked()
+{
+
+    sort_type=ui->sort_type->currentText();
+
+    if(sort_type=="price")
+        Item::sort_by_price();
+    if(sort_type=="brand")
+        Item::sort_by_brand();
+    if(sort_type=="name")
+        Item::sort_by_name();
 
 }
 

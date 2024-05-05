@@ -26,7 +26,10 @@ private slots:
 
     void on_manageUsersBtn_clicked();
 
+    void on_sort_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QString sort_type;
 };
 #endif // MAINWINDOW_H

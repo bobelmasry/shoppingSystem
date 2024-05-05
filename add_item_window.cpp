@@ -28,6 +28,7 @@ void Add_Item_Window::on_pushButton_clicked()
         if (file.open(QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&file);
             out << prod_name << "," << price << "," << brand << "," << stock << "," << category << "\n";
+
             file.close();
             hide();
         } else {
