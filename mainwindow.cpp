@@ -77,6 +77,7 @@ void MainWindow::on_loginButton_clicked()
 
         if (csvUsername == username && csvPassword == password) {
             loggedIn = true;
+            userDetails = fields;
             if (User == "TRUE") {
                 ui->manageProductsBtn->show();
                 ui->manageUsersBtn->show();
@@ -207,12 +208,91 @@ void MainWindow::on_all_categories_clicked()
     readProductsFromFile();
 }
 
+int getText(QString productName) {
+    // Open the file
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
+    // Create the full file path
+    QString filePath = desktopDir + "/products.txt";
 
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open products.txt for reading:" << file.errorString();
+        return 0; // Return 0 if file cannot be opened
+    }
 
+    // Read the file line by line
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList fields = line.split(',');
+        if (fields.size() == 6) { // Ensure line has correct number of fields
+            QString name = fields[0].trimmed();
+            if (name == productName) {
+                file.close();
+                return fields[5].trimmed().toInt(); // Return the ID of the matching product
+            }
+        }
+    }
 
+    file.close();
+    return 0; // Return 0 if product not found
+}
 
+void appendToUserCart(QString username, int productID) {
+    // Open the file
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
+    // Create the full file path
+    QString filePath = desktopDir + "/users.txt";
 
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qDebug() << "Failed to open users.txt for reading and writing:" << file.errorString();
+        return; // Return if file cannot be opened
+    }
 
+    // Read the file line by line and find the user
+    QTextStream in(&file);
+    QStringList lines;
+    bool userFound = false;
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList fields = line.split(',');
+        if (fields.size() == 4) { // Ensure line has correct number of fields
+            QString csvUsername = fields[0].trimmed();
+            if (csvUsername == username) {
+                userFound = true;
+                // Append the product ID to the shopping cart
+                fields[3] = fields[3].trimmed();
+                if (!fields[3].isEmpty()) {
+                    fields[3] += "-";
+                }
+                // Add the product ID without extra double quotes
+                fields[3] += QString::number(productID);
+            }
+            lines.append(fields.join(','));
+        }
+    }
+
+    // If user not found, append a new line for the user
+    if (!userFound) {
+        lines.append(username + ",,," + QString::number(productID));
+    }
+
+    file.resize(0); // Clear the file content
+    // Write the updated lines back to the file
+    for (const QString& line : qAsConst(lines)) {
+        in << line << '\n';
+    }
+
+    file.close();
+}
+
+void MainWindow::on_p00_clicked()
+{
+    QString text = ui->p00->text();
+    if (text != "" && userDetails[0] != "" && userDetails[2] == "FALSE") // empty box
+        appendToUserCart(userDetails[0], getText(text));
+}
 

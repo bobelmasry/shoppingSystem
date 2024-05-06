@@ -52,6 +52,8 @@ private slots:
 
 
 
+    void on_p00_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString sort_type;
