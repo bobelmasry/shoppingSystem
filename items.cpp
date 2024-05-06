@@ -12,19 +12,20 @@ Item::Item()
 
 }
 
-Item::Item(QString n, int s, double p, QString c, QString b):stock(s),price(p),category(c),brand(b),name(n)
+Item::Item(QString n, int s, double p, QString c, QString b, int id):stock(s),price(p),category(c),brand(b),name(n)
 {
     items.push_back(*this);
     qDebug()<<"pushed in an item in the list, called paramterized const"<<Qt::endl;
 }
 
-void Item::addItem(QString n, int s, double p, QString c, QString b)
+void Item::addItem(QString n, int s, double p, QString c, QString b, int id)
 {
     stock=s;
     price=p;
     category=c;
     brand=b;
     name=n;
+    id = id;
 
     // Get the desktop directory path
     QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
@@ -69,15 +70,16 @@ vector<Item> readProductsFromFile()
     while (!in.atEnd()) {
         QString line = in.readLine();
         QStringList fields = line.split(',');
-        if (fields.size() == 5) {
+        if (fields.size() == 6) {
             QString name = fields[0];
             double price = fields[1].toDouble();
             int quantity = fields[3].toInt(); // Changed index from 3 to 1
             QString category = fields[4]; // Changed index from 4 to 3
             QString brand = fields[2].trimmed(); // Changed index from 2 to 4
+            int id = fields[5].toInt();
 
             // Create an Item object using the constructor
-            Item item(name, price, quantity, category, brand);
+            Item item(name, price, quantity, category, brand, id);
             products.push_back(item);
         } else {
             qDebug() << "Invalid line format:" << line;

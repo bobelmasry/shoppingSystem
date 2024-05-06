@@ -1,6 +1,5 @@
 #include "registrationwindow.h"
 #include "ui_registrationwindow.h"
-#include "mainwindow.h"
 #include <QDebug>
 #include <QFile>
 #include <QStandardPaths>
