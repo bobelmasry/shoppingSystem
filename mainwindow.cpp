@@ -309,6 +309,14 @@ void MainWindow::handleButtonClick() {
     if (clickedButton) {
         QString buttonName = clickedButton->objectName();
         qDebug() << "Button clicked:" << buttonName;
+        QString buttonText = clickedButton->text(); // Get the text of the button
+        qDebug() << "Button text:" << buttonText;
+
+        // Split the text using the newline character and get the first part
+        QString productName = buttonText.split("\n").first();
+        qDebug() << "Product name:" << productName;
+
+        appendToUserCart(userDetails[0], getText(productName));
     }
 }
 

@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     add_item_window.cpp \
+    cartwindow.cpp \
     items.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     add_item_window.h \
+    cartwindow.h \
     items.h \
     mainwindow.h \
     registrationwindow.h \
@@ -27,6 +29,7 @@ HEADERS += \
 
 FORMS += \
     add_item_window.ui \
+    cartwindow.ui \
     mainwindow.ui \
     registrationwindow.ui \
     userwindow.ui
