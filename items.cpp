@@ -148,6 +148,8 @@ void Item::sort_by_name()
 void Item::fruit()
 {
     vector<Item> filteredItems;
+    Item::items.clear();
+    readProductsFromFile();
 
     for (auto& item : items) {
         if (item.getCategory() == "Fruits and Vegetables") {
@@ -162,6 +164,8 @@ void Item::fruit()
 void Item::meat()
 {
     vector<Item> filteredItems;
+    Item::items.clear();
+    readProductsFromFile();
 
     for (auto& item : items) {
         if (item.getCategory() == "Meat and Poultry") {
@@ -175,6 +179,8 @@ void Item::meat()
 void Item::grain()
 {
     vector<Item> filteredItems;
+    Item::items.clear();
+    readProductsFromFile();
 
     for (auto& item : items) {
         if (item.getCategory() == "Grains") {
@@ -188,6 +194,8 @@ void Item::grain()
 void Item::drinks()
 {
     vector<Item> filteredItems;
+    Item::items.clear();
+    readProductsFromFile();
 
     for (auto& item : items) {
         if (item.getCategory() == "Drinks") {
@@ -201,6 +209,8 @@ void Item::drinks()
 void Item::dairy()
 {
     vector<Item> filteredItems;
+    Item::items.clear();
+    readProductsFromFile();
 
     for (auto& item : items) {
         if (item.getCategory() == "Dairy") {
@@ -215,6 +225,8 @@ void Item::dairy()
 void Item::desert()
 {
     vector<Item> filteredItems;
+    Item::items.clear();
+    readProductsFromFile();
 
     for (auto& item : items) {
         if (item.getCategory() == "Deserts") {
@@ -229,6 +241,9 @@ void Item::frozen()
 {
     vector<Item> filteredItems;
 
+    Item::items.clear();
+    readProductsFromFile();
+
     for (auto& item : items) {
         if (item.getCategory() == "Frozen Food") {
             filteredItems.push_back(item);
@@ -236,6 +251,7 @@ void Item::frozen()
     }
 
     items = filteredItems;
+    qDebug()<<"items=filteredItem"<<Qt::endl;
 }
 
 void Item::printitems() {

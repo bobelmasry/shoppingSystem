@@ -126,8 +126,8 @@ void MainWindow::on_sort_clicked()
 {
 
     sort_type=ui->sort_type->currentText();
-    Item::items.clear();
-    readProductsFromFile();
+    //Item::items.clear();
+    //readProductsFromFile();
 
     if(sort_type=="price")
         Item::sort_by_price();
@@ -136,7 +136,9 @@ void MainWindow::on_sort_clicked()
     if(sort_type=="name")
         Item::sort_by_name();
 
+    Item::printitems();
      setButtonNames(this);
+
 
 }
 
@@ -145,8 +147,6 @@ void MainWindow::on_sort_clicked()
 
 void MainWindow::on_fruit_category_clicked()
 {
-    Item::items.clear();
-    readProductsFromFile();
     Item::fruit();
 }
 
@@ -154,8 +154,7 @@ void MainWindow::on_fruit_category_clicked()
 void MainWindow::on_meat_category_clicked()
 {
 
-    Item::items.clear();
-    readProductsFromFile();
+
     Item::meat();
 
 }
@@ -163,40 +162,34 @@ void MainWindow::on_meat_category_clicked()
 
 void MainWindow::on_dairy_category_clicked()
 {
-    Item::items.clear();
-    readProductsFromFile();
+
     Item::dairy();
 }
 
 
 void MainWindow::on_grains_category_clicked()
 {
-    Item::items.clear();
-    readProductsFromFile();
+
     Item::grain();
 }
 
 
 void MainWindow::on_desert_category_clicked()
 {
-    Item::items.clear();
-    readProductsFromFile();
+
     Item::desert();
 }
 
 
 void MainWindow::on_frozen_category_clicked()
 {
-    Item::items.clear();
-    readProductsFromFile();
+
     Item::frozen();
 }
 
 
 void MainWindow::on_drinks_category_clicked()
 {
-    Item::items.clear();
-    readProductsFromFile();
     Item::drinks();
 }
 
@@ -204,7 +197,6 @@ void MainWindow::on_drinks_category_clicked()
 void MainWindow::on_all_categories_clicked()
 {
     Item::items.clear();
-    readProductsFromFile();
     readProductsFromFile();
 }
 
