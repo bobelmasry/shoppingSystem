@@ -27,7 +27,7 @@ void setButtonNames(MainWindow *mainWindow) {
             if (button) {
                 if (index < Item::items.size()) {
                     QString itemName = Item::items[index].getName();
-                    qDebug() << "Setting text for button" << buttonName << "to item name:" << itemName;
+                    //qDebug() << "Setting text for button" << buttonName << "to item name:" << itemName;
                     button->setText(itemName);
                 } else {
                     // If no more items in the list, set empty text
