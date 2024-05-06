@@ -201,10 +201,13 @@ void MainWindow::on_all_categories_clicked()
 
 
 
-
-
-
-
-
-
+void MainWindow::on_search_clicked()
+{
+    search=ui->search_bar->text();
+    Item::search(search);
+    setButtonNames(this);
+    if(search=="")
+    {readProductsFromFile();
+        setButtonNames(this);}
+}
 

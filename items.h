@@ -57,6 +57,10 @@ public:
     static void printitems();
 
 
+    //the normal search
+    static void search(QString search);
+
+
 
 
 };

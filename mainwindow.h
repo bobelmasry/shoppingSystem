@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    QString search;
     ~MainWindow();
 
 private slots:
@@ -49,6 +50,8 @@ private slots:
 
 
     void on_all_categories_clicked();
+
+    void on_search_clicked();
 
 
 

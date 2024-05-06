@@ -27,8 +27,12 @@ void setButtonNames(MainWindow *mainWindow) {
             if (button) {
                 if (index < Item::items.size()) {
                     QString itemName = Item::items[index].getName();
-                    //qDebug() << "Setting text for button" << buttonName << "to item name:" << itemName;
-                    button->setText(itemName);
+                    QString itemBrand = Item::items[index].getBrand();
+                    double itemPrice = Item::items[index].getPrice();
+                    int itemStock = Item::items[index].getQuantity();
+
+                    // Set button text to item name, brand, price, and stock
+                    button->setText(itemName + "\n" + itemBrand + "\n$" + QString::number(itemPrice) + "\nStock: " + QString::number(itemStock));
                 } else {
                     // If no more items in the list, set empty text
                     button->setText("");
@@ -38,3 +42,4 @@ void setButtonNames(MainWindow *mainWindow) {
         }
     }
 }
+

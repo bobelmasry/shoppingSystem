@@ -439,7 +439,7 @@ border:none;</string>
    <widget class="QComboBox" name="sort_type">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>710</x>
       <y>170</y>
       <width>131</width>
       <height>28</height>
@@ -467,7 +467,7 @@ border:none;</string>
    <widget class="QPushButton" name="sort">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>850</x>
       <y>170</y>
       <width>83</width>
       <height>29</height>
@@ -675,7 +675,7 @@ border:none;</string>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>PushButton</string>
     </property>
    </widget>
    <widget class="QPushButton" name="p22">
@@ -941,6 +941,22 @@ border:none;</string>
      <string>PushButton</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="search">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>170</y>
+      <width>83</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Search</string>
+    </property>
+   </widget>
    <zorder>groupBox_2</zorder>
    <zorder>groupBox</zorder>
    <zorder>search_bar</zorder>
@@ -981,6 +997,7 @@ border:none;</string>
    <zorder>p41</zorder>
    <zorder>p40</zorder>
    <zorder>p44</zorder>
+   <zorder>search</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

@@ -12,7 +12,7 @@ Item::Item()
 
 }
 
-Item::Item(QString n, int s, double p, QString c, QString b, int id):stock(s),price(p),category(c),brand(b),name(n)
+Item::Item(QString n, int s, double p, QString c, QString b, int id):stock(s),price(p),category(c),brand(b),name(n),id(id)
 {
     items.push_back(*this);
     qDebug()<<"pushed in an item in the list, called paramterized const"<<Qt::endl;
@@ -25,7 +25,7 @@ void Item::addItem(QString n, int s, double p, QString c, QString b, int id)
     category=c;
     brand=b;
     name=n;
-    id = id;
+    this->id = id;
 
     // Get the desktop directory path
     QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
@@ -127,17 +127,15 @@ void Item::sort_by_price()
 
 void Item::sort_by_brand()
 {
-
     sort(items.begin(), items.end(), [](Item& a, Item& b) {
-        return a.getBrand() < b.getBrand(); //get brand sorts by brand
+        return QString::compare(a.getBrand(), b.getBrand(), Qt::CaseInsensitive) < 0;
     });
-
 }
 
 void Item::sort_by_name()
 {
     sort(items.begin(), items.end(), [](Item& a, Item& b) {
-        return a.getName() < b.getName(); //get name sorts by name
+        return QString::compare(a.getName(), b.getName(), Qt::CaseInsensitive) < 0;
     });
 }
 
@@ -259,6 +257,19 @@ void Item::printitems() {
     {
         qDebug()<< item.getName()<<item.getPrice()<<item.getBrand()<<item.getCategory()<<item.stock<< Qt::endl;
     }
+}
+
+void Item::search(QString search)
+{
+    vector<Item> filtered;
+    for (auto& item : items) {
+        if (item.getName().startsWith(search, Qt::CaseInsensitive) ||
+            item.getBrand().startsWith(search, Qt::CaseInsensitive)) {
+            filtered.push_back(item);
+        }
+    }
+    items = filtered;
+    qDebug() << "Search conducted on:" << search;
 }
 
 
