@@ -207,14 +207,6 @@ int getText(QString productName) {
     // Create the full file path
     QString filePath = desktopDir + "/products.txt";
 
-void MainWindow::on_search_clicked()
-{
-    search=ui->search_bar->text();
-    Item::search(search);
-    setButtonNames(this);
-    if(search=="")
-    {readProductsFromFile();
-        setButtonNames(this);}
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Failed to open products.txt for reading:" << file.errorString();
@@ -237,6 +229,16 @@ void MainWindow::on_search_clicked()
 
     file.close();
     return 0; // Return 0 if product not found
+}
+
+void MainWindow::on_search_clicked()
+{
+    search=ui->search_bar->text();
+    Item::search(search);
+    setButtonNames(this);
+    if(search=="")
+    {readProductsFromFile();
+        setButtonNames(this);}
 }
 
 void appendToUserCart(QString username, int productID) {
