@@ -43,6 +43,7 @@ void MainWindow::on_signup_clicked()
 
 void MainWindow::on_loginButton_clicked()
 {
+    qDebug() << QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     QString username = ui->userNameBox->text();
     QString password = ui->passwordBox->text();
 
@@ -76,7 +77,7 @@ void MainWindow::on_loginButton_clicked()
 
         if (csvUsername == username && csvPassword == password) {
             loggedIn = true;
-            if (User == "admin") {
+            if (User == "TRUE") {
                 ui->manageProductsBtn->show();
                 ui->manageUsersBtn->show();
                 ui->delete_prod_button->show();

@@ -13,6 +13,16 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QListView" name="listView">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>371</width>
+     <height>491</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

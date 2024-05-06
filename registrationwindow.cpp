@@ -96,9 +96,9 @@ void Registrationwindow::on_registerButton_clicked()
 
     // Check if admin or regular user is selected
     if(ui->admin_button->isChecked()) {
-        userType = "admin";
+        userType = "TRUE";
     } else if (ui->user_button->isChecked() && ui->passwarning->isHidden() && ui->userwarning->isHidden()) {
-        userType = "user";
+        userType = "FALSE";
     } else {
         ui->fieldwarning->show();
         return;
