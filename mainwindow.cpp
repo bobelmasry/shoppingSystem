@@ -27,6 +27,18 @@ MainWindow::MainWindow(QWidget *parent)
     setButtonNames(this);
     Item::printitems();
 
+
+    ///////setting up button presses
+    for (int row = 0; row < 5; ++row) {
+        for (int col = 0; col < 7; ++col) {
+            QString buttonName = "p" + QString::number(row) + QString::number(col); // Button name format
+            QPushButton *button = this->findChild<QPushButton*>(buttonName); // Find the button by name
+            if (button) {
+                connect(button, &QPushButton::clicked, this, &MainWindow::handleButtonClick);
+            }
+        }
+    }
+
 }
 
 MainWindow::~MainWindow()
@@ -237,7 +249,8 @@ void MainWindow::on_search_clicked()
     Item::search(search);
     setButtonNames(this);
     if(search=="")
-    {readProductsFromFile();
+    {Item::items.clear();
+        readProductsFromFile();
         setButtonNames(this);}
 }
 
@@ -291,10 +304,11 @@ void appendToUserCart(QString username, int productID) {
     file.close();
 }
 
-void MainWindow::on_p00_clicked()
-{
-    QString text = ui->p00->text();
-    if (text != "" && userDetails[0] != "" && userDetails[2] == "FALSE") // empty box
-        appendToUserCart(userDetails[0], getText(text));
+void MainWindow::handleButtonClick() {
+    QPushButton *clickedButton = qobject_cast<QPushButton*>(sender());
+    if (clickedButton) {
+        QString buttonName = clickedButton->objectName();
+        qDebug() << "Button clicked:" << buttonName;
+    }
 }
 

@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     QString search;
+    void handleButtonClick();
     ~MainWindow();
 
 private slots:
@@ -55,7 +56,7 @@ private slots:
 
 
 
-    void on_p00_clicked();
+    //void on_p00_clicked();
 
 private:
     Ui::MainWindow *ui;
