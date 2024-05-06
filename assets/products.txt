@@ -1,8 +1,9 @@
-Product Name,Price,Brand Name,Quantity,Category
-Whole Milk,25,Mara3y,12,Dairy
-Chicken Breast,8,Farm Fresh,5,Meat and Poultry
-Apple,1.5,Orchard Delight,10,Fruits and Vegetables
-Orange Juice,3.5,Citrus Grove,8,Drinks
-Brown Rice,2.5,Healthy Harvest,6,Grains
-Frozen Pizza,7,Quick 'n Easy,3,Frozen Food
-Chocolate Cake,12,Sweet Treats,2,Deserts
+Product Name,Price,Brand Name,Quantity,Category,id
+Whole Milk,25,Mara3y,12,Dairy,1
+Chicken Breast,8,Farm Fresh,5,Meat and Poultry,2
+Apple,1.5,Orchard Delight,10,Fruits and Vegetables,3
+Orange Juice,3.5,Citrus Grove,8,Drinks,4
+Brown Rice,2.5,Healthy Harvest,6,Grains,5
+Frozen Pizza,7,Quick 'n Easy,3,Frozen Food,6
+Chocolate Cake,12,Sweet Treats,2,Deserts,7
+
