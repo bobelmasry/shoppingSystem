@@ -8,6 +8,7 @@
 #include <QFile>
 #include <items.h>
 #include <shelf.h>
+#include "cartwindow.h"
 
 QStringList userDetails;
 
@@ -320,3 +321,10 @@ void MainWindow::handleButtonClick() {
     }
 }
 
+
+void MainWindow::on_cart_clicked()
+{
+    hide();
+    cartWindow* cart_window = new cartWindow(userDetails[0]);
+    cart_window->show();
+}

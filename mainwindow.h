@@ -54,6 +54,8 @@ private slots:
 
     void on_search_clicked();
 
+    void on_cart_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString sort_type;

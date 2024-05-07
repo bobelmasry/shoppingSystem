@@ -9,10 +9,9 @@ class cartWindow;
 
 class cartWindow : public QDialog
 {
-    Q_OBJECT
 
 public:
-    explicit cartWindow(QWidget *parent = nullptr);
+    explicit cartWindow(const QString& username, QWidget *parent = nullptr);
     ~cartWindow();
 
 private:
