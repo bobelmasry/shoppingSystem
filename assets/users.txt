@@ -1,4 +1,4 @@
 username,password,isAdmin,inShoppingCart
-A,123,TRUE,""
-B,123,FALSE,""
-C,123,FALSE,""
+A,123,TRUE,
+B,123,FALSE,1-2
+C,123,FALSE,

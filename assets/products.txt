@@ -6,4 +6,3 @@ Orange Juice,3.5,Citrus Grove,8,Drinks,4
 Brown Rice,2.5,Healthy Harvest,6,Grains,5
 Frozen Pizza,7,Quick 'n Easy,3,Frozen Food,6
 Chocolate Cake,12,Sweet Treats,2,Deserts,7
-
