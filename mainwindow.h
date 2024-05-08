@@ -17,6 +17,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     QString search;
     void handleButtonClick();
+    bool loggedIn;
+    //bool cart_empty;
     ~MainWindow();
 
 private slots:

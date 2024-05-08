@@ -9,7 +9,7 @@
 #include <items.h>
 #include <shelf.h>
 #include "cartwindow.h"
-#include "manageproducts.h".h"
+#include "manageproducts.h"
 
 QStringList userDetails;
 
@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->cart->hide();
     readProductsFromFile();
     setButtonNames(this);
+    loggedIn=false;
+    //cart_empty=true;
     Item::printitems();
 
 
@@ -80,7 +82,7 @@ void MainWindow::on_loginButton_clicked()
 
     QTextStream in(&file);
     QString line;
-    bool loggedIn = false;
+    loggedIn = false;
 
     while (!(line = in.readLine()).isNull()) {
         QStringList fields = line.split(',');
@@ -264,7 +266,8 @@ void appendToUserCart(QString username, int productID) {
     QString filePath = desktopDir + "/users.txt";
 
     QFile file(filePath);
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
         qDebug() << "Failed to open users.txt for reading and writing:" << file.errorString();
         return; // Return if file cannot be opened
     }
@@ -308,7 +311,8 @@ void appendToUserCart(QString username, int productID) {
 
 void MainWindow::handleButtonClick() {
     QPushButton *clickedButton = qobject_cast<QPushButton*>(sender());
-    if (clickedButton) {
+    if (clickedButton&&loggedIn)
+    {
         QString buttonName = clickedButton->objectName();
         qDebug() << "Button clicked:" << buttonName;
         QString buttonText = clickedButton->text(); // Get the text of the button
@@ -325,15 +329,16 @@ void MainWindow::handleButtonClick() {
 
 void MainWindow::on_cart_clicked()
 {
-    hide();
     cartWindow* cart_window = new cartWindow(userDetails[0]);
     cart_window->show();
+
 }
+
 
 void MainWindow::on_delete_prod_button_clicked()
 {
-    hide();
     manageProducts* product_window = new manageProducts;
+
     product_window->show();
 }
 

@@ -46,7 +46,6 @@ void Item::addItem(QString n, int s, double p, QString c, QString b, int id)
 
 }
 
-
 vector<Item> readProductsFromFile()
 {
     vector<Item> products;
@@ -57,7 +56,17 @@ vector<Item> readProductsFromFile()
     // Create the full file path
     QString filePath = desktopDir + "/products.txt";
 
+    // Check if the file exists, if not, create it
     QFile file(filePath);
+    if (!file.exists()) {
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Failed to create products.txt:" << file.errorString();
+            return products;
+        }
+        file.close();
+    }
+
+    // Open the file
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << "Failed to open file:" << file.errorString();
@@ -114,6 +123,16 @@ int Item::getQuantity()  {
 QString Item::getCategory()  {
     return category;
 }
+
+
+int Item::getId()
+{
+    return id;
+}
+
+
+
+
 
 ///////////////////////////the sorters
 

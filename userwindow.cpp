@@ -28,7 +28,7 @@ userWindow::userWindow(QWidget *parent)
         QString user = fields[0].trimmed();
         QString isAdmin = fields[2].trimmed();
         qDebug() << user << "\n";
-        if (user != "username" && isAdmin != "TRUE"){
+        if (user != "username" && isAdmin != "TRUE,"){
             QWidget *itemWidget = new QWidget();
             QHBoxLayout *layout = new QHBoxLayout(itemWidget);
 

@@ -31,6 +31,7 @@ public:
     QString getBrand();
     int getQuantity();
     QString getCategory();
+    int getId();
 
 
 

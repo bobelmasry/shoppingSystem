@@ -1,4 +1,5 @@
 #include "manageproducts.h"
+#include "mainwindow.h"
 #include "ui_manageproducts.h"
 #include "qstandardpaths.h"
 #include <QFile>
@@ -6,86 +7,90 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 
+
+map<pair<int, int>, vector<Item>>manageProducts:: del;
+
+// Constructor: Load initial data into line edits
 manageProducts::manageProducts(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::manageProducts)
 {
     ui->setupUi(this);
 
-    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-
-    QString filePath = desktopDir + "/products.txt";
-
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Failed to open products.txt for reading:" << file.errorString();
-        return;
-    }
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        QStringList fields = line.split(',');
-        QString productName = fields[0].trimmed();
-        qDebug() << productName << "\n";
-        if (productName != "Product Name"){
-            QWidget *itemWidget = new QWidget();
-            QHBoxLayout *layout = new QHBoxLayout(itemWidget);
-
-            QLabel *label = new QLabel(productName);
-            layout->addWidget(label);
-
-            QPushButton *removeButton = new QPushButton("Remove");
-            layout->addWidget(removeButton);
-
-            connect(removeButton, &QPushButton::clicked, this, [=]() {
-                qDebug() << "Remove button clicked for product:" << productName;
-                removeProduct(productName);
-            });
-
-            QListWidgetItem *listItem = new QListWidgetItem();
-            listItem->setSizeHint(itemWidget->sizeHint());
-
-            ui->listWidget->addItem(listItem);
-            ui->listWidget->setItemWidget(listItem, itemWidget);
-
-        }
-    }
-    file.close();
+    // Load initial data into line edits
+    setEditLinesText(this);
 }
 
-void manageProducts::removeProduct(const QString& productName) {
-    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-
-    QString filePath = desktopDir + "/products.txt";
-
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
-        qDebug() << "Failed to open products.txt for reading and writing:" << file.errorString();
-        return;
-    }
-
-    QTextStream in(&file);
-    QStringList lines;
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        QStringList fields = line.split(',');
-        QString productNameInFile = fields[1].trimmed();
-        if (productNameInFile != productName) {
-            // exclude the line corresponding to the product to be removed
-            lines.append(line);
+// Function to set initial data into line edits
+void manageProducts::setEditLinesText(manageProducts* itemWindow) {
+    int index = 0; // Index for accessing items in the Item::items list
+    for (int row = 0; row < 9; ++row) {
+        for (int col = 0; col < 6; ++col) { // Changed to 6 fields per line edit
+            QString editName = "e" + QString::number(row) + QString::number(col); // Edit line name format
+            QLineEdit *editLine = itemWindow->findChild<QLineEdit*>(editName); // Find the edit line by name
+            if (editLine) {
+                if (index < Item::items.size())
+                {
+                    QString itemName = Item::items[index].getName();
+                    QString itemBrand = Item::items[index].getBrand();
+                    double itemPrice = Item::items[index].getPrice();
+                    int itemStock = Item::items[index].getQuantity();
+                    QString category = Item::items[index].getCategory();
+                    int id = Item::items[index].getId();
+                    // Set initial data into line edit
+                    editLine->setText(itemName + "," + QString::number(itemPrice) + "," + itemBrand + "," + QString::number(itemStock) + "," + category + "," + QString::number(id));
+                } else {
+                    // If no more items in the list, set empty text
+                    editLine->clear();
+                }
+                ++index; // Move to the next item index
+            }
         }
     }
-
-    file.resize(0);  // clear the contents of the file
-    QTextStream out(&file);
-    for (const QString& line : lines) {
-        out << line << "\n";  // rewrite the file without the removed product
-    }
-
-    file.close();
 }
 
+// Destructor
 manageProducts::~manageProducts()
 {
     delete ui;
+}
+
+// Button click event handler
+void manageProducts::on_pushButton_clicked() {
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    QString filename = desktopDir + "/products.txt";
+
+    QFile file(filename);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+
+        const int numRows = 8;
+        const int numCols = 4;
+        for (int row = 0; row < numRows; ++row) {
+            QString data;
+            bool emptyRow = true;
+            for (int col = 0; col < numCols; ++col) {
+                QString editName = "e" + QString::number(row) + QString::number(col);
+                QLineEdit* editLine = this->findChild<QLineEdit*>(editName);
+                if (editLine) {
+                    QString text = editLine->text().trimmed();
+                    if (!text.isEmpty()) {
+                        data += text + ",";
+                        emptyRow = false;
+                    }
+                }
+            }
+            if (!emptyRow) {
+                data.chop(1); // Remove the trailing comma
+                out << data << "\n"; // Write data to the file
+            }
+        }
+        qDebug() << "File updated with new content: " << filename;
+
+        file.close();
+    } else {
+        qDebug() << "Error: Unable to open file for writing: " << filename;
+    }
+
+    hide();
 }

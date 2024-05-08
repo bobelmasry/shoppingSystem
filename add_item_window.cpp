@@ -20,7 +20,7 @@ void Add_Item_Window::on_pushButton_clicked()
     price = ui->prod_price->value();
     brand = ui->brand_name->text();
     stock = ui->stock_count->value();
-    category = ui->category->currentText(); 
+    category = ui->category->currentText();
 
     if (prod_name.isEmpty() || price == 0 || brand.isEmpty() || stock == 0 || category == "---") {
         ui->all_fields_label->show();
@@ -30,6 +30,16 @@ void Add_Item_Window::on_pushButton_clicked()
 
         // Create the full file path
         QString filePath = desktopDir + "/products.txt";
+
+        // Check if the file exists, if not, create it
+        QFile file(filePath);
+        if (!file.exists()) {
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                qDebug() << "Failed to create products.txt:" << file.errorString();
+                return;
+            }
+            file.close();
+        }
 
         // Open the file to count the number of lines
         QFile countFile(filePath);
@@ -56,10 +66,7 @@ void Add_Item_Window::on_pushButton_clicked()
             qDebug() << "Failed to open products.txt for counting lines:" << countFile.errorString();
         }
     }
-
 }
-
-
 
 
 Add_Item_Window::~Add_Item_Window()
