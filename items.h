@@ -60,6 +60,8 @@ public:
     //the normal search
     static void search(QString search);
 
+    static void reduce_stock();
+
 
 
 

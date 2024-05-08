@@ -1,8 +1,12 @@
 #include "cartwindow.h"
+#include "checkout.h"
 #include "ui_cartwindow.h"
 #include "qstandardpaths.h"
 #include <QFile>
 #include <QDebug>
+
+
+double cartWindow::payment;
 
 cartWindow::cartWindow(const QString& username, QWidget *parent)
     : QDialog(parent)
@@ -23,6 +27,7 @@ cartWindow::cartWindow(const QString& username, QWidget *parent)
     qDebug() << "username:" << username;
 
     QTextStream in(&file);
+    int totalField1 = 0; // Variable to accumulate the values from fields[1]
     while (!in.atEnd()) {
         QString line = in.readLine();
         QStringList fields = line.split(',');
@@ -54,6 +59,8 @@ cartWindow::cartWindow(const QString& username, QWidget *parent)
 
                 QString productId = productFields[5].trimmed();
                 if (productIds.contains(productId)) {
+                    QString field1Value = productFields[1].trimmed();
+                    totalField1 += field1Value.toInt(); // Accumulate the value from fields[1]
                     QString productName = productFields[0].trimmed();
                     QListWidgetItem *listItem = new QListWidgetItem(productName);
                     ui->listWidget->addItem(listItem);
@@ -65,10 +72,58 @@ cartWindow::cartWindow(const QString& username, QWidget *parent)
         }
     }
 
+    payment=totalField1; // Output the total value
+    qDebug()<<payment;
     file.close();
 }
+
 
 cartWindow::~cartWindow()
 {
     delete ui;
+}
+
+void cartWindow::on_pushButton_clicked()
+{
+    Checkout*checkout=new Checkout;
+    hide();
+    checkout->show();
+}
+
+
+void cartWindow::clear_cart(QString &username)
+{
+    QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    QString filePath = desktopDir + "/users.txt";
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qDebug() << "Failed to open users.txt for writing:" << file.errorString();
+        return;
+    }
+
+    QString updatedContent; // Variable to hold the updated content
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        QStringList fields = line.split(',');
+        if (fields.size() >= 1 && fields[0].trimmed() == username) {
+            // Found the user, remove the shopping cart data
+            updatedContent += fields[0].trimmed() + "," + fields[1].trimmed() + "," + fields[2].trimmed() +","+ "\n";
+        } else {
+            // Keep the line unchanged for other users
+            updatedContent += line + "\n";
+        }
+    }
+
+    // Write the updated content back to the file
+    file.seek(0); // Move to the beginning of the file
+    file.write(updatedContent.toUtf8());
+
+    // Truncate the file to the current position
+    file.resize(file.pos());
+
+    file.close();
+
+    return;
 }

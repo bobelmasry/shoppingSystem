@@ -235,6 +235,19 @@ text-decoration: underline;
       <string>Cart</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="checkout">
+     <property name="geometry">
+      <rect>
+       <x>1420</x>
+       <y>120</y>
+       <width>83</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Checkout</string>
+     </property>
+    </widget>
     <zorder>helloLabel</zorder>
     <zorder>signup</zorder>
     <zorder>logo</zorder>
@@ -247,6 +260,7 @@ text-decoration: underline;
     <zorder>passwordBox</zorder>
     <zorder>manageUsersBtn</zorder>
     <zorder>cart</zorder>
+    <zorder>checkout</zorder>
    </widget>
    <widget class="QLineEdit" name="search_bar">
     <property name="geometry">

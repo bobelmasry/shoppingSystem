@@ -17,6 +17,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     QString search;
     void handleButtonClick();
+    static QString username;
     ~MainWindow();
 
 private slots:
@@ -58,8 +59,13 @@ private slots:
 
     void on_delete_prod_button_clicked();
 
+    void on_checkout_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString sort_type;
+    bool loggedIn;
+    bool cart_empty;
+    int click_counter=0;
 };
 #endif // MAINWINDOW_H

@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "checkout.h"
 #include "qstandardpaths.h"
 #include "ui_mainwindow.h"
 #include "registrationwindow.h"
@@ -9,9 +10,11 @@
 #include <items.h>
 #include <shelf.h>
 #include "cartwindow.h"
-#include "manageproducts.h".h"
+#include "manageproducts.h"
+#include "checkout.h"
 
 QStringList userDetails;
+QString MainWindow::username;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,7 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->incorrect_login->hide();
     ui->delete_prod_button->hide();
     ui->cart->hide();
+    ui->checkout->hide();
     readProductsFromFile();
+    loggedIn=false;
+    cart_empty=false;
     setButtonNames(this);
     Item::printitems();
 
@@ -98,6 +104,7 @@ void MainWindow::on_loginButton_clicked()
                 ui->delete_prod_button->show();
             } else {
                 ui->cart->show();
+                ui->checkout->show();
             }
             break;
         }
@@ -113,6 +120,7 @@ void MainWindow::on_loginButton_clicked()
         ui->loginButton->deleteLater();
         ui->label_2->deleteLater();
         ui->signup->deleteLater();
+        this->username=username;
         ui->helloLabel->setText("Hello " + username);
     } else {
         ui->incorrect_login->show();
@@ -307,6 +315,7 @@ void appendToUserCart(QString username, int productID) {
 }
 
 void MainWindow::handleButtonClick() {
+
     QPushButton *clickedButton = qobject_cast<QPushButton*>(sender());
     if (clickedButton) {
         QString buttonName = clickedButton->objectName();
@@ -319,13 +328,14 @@ void MainWindow::handleButtonClick() {
         qDebug() << "Product name:" << productName;
 
         appendToUserCart(userDetails[0], getText(productName));
+        click_counter++;
     }
 }
 
 
 void MainWindow::on_cart_clicked()
 {
-    hide();
+
     cartWindow* cart_window = new cartWindow(userDetails[0]);
     cart_window->show();
 }
@@ -335,5 +345,15 @@ void MainWindow::on_delete_prod_button_clicked()
     hide();
     manageProducts* product_window = new manageProducts;
     product_window->show();
+}
+
+
+void MainWindow::on_checkout_clicked()
+{
+
+
+    qDebug()<<"check click";
+    Checkout*checkout=new Checkout;
+    checkout->show();
 }
 
