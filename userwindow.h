@@ -14,6 +14,7 @@ class userWindow : public QDialog
 public:
     explicit userWindow(QWidget *parent = nullptr);
     ~userWindow();
+    void removeUser(const QString& username);
 
 private:
     Ui::userWindow *ui;
