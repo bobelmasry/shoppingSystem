@@ -14,6 +14,7 @@ SOURCES += \
     items.cpp \
     main.cpp \
     mainwindow.cpp \
+    manageproducts.cpp \
     registrationwindow.cpp \
     shelf.cpp \
     userwindow.cpp
@@ -23,6 +24,7 @@ HEADERS += \
     cartwindow.h \
     items.h \
     mainwindow.h \
+    manageproducts.h \
     registrationwindow.h \
     shelf.h \
     userwindow.h
@@ -31,6 +33,7 @@ FORMS += \
     add_item_window.ui \
     cartwindow.ui \
     mainwindow.ui \
+    manageproducts.ui \
     registrationwindow.ui \
     userwindow.ui
 

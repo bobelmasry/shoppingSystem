@@ -56,6 +56,8 @@ private slots:
 
     void on_cart_clicked();
 
+    void on_delete_prod_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString sort_type;

@@ -9,6 +9,7 @@
 #include <items.h>
 #include <shelf.h>
 #include "cartwindow.h"
+#include "manageproducts.h".h"
 
 QStringList userDetails;
 
@@ -328,3 +329,11 @@ void MainWindow::on_cart_clicked()
     cartWindow* cart_window = new cartWindow(userDetails[0]);
     cart_window->show();
 }
+
+void MainWindow::on_delete_prod_button_clicked()
+{
+    hide();
+    manageProducts* product_window = new manageProducts;
+    product_window->show();
+}
+
