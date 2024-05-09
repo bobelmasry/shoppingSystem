@@ -69,7 +69,7 @@ void manageProducts::removeProduct(const QString& productName) {
     while (!in.atEnd()) {
         QString line = in.readLine();
         QStringList fields = line.split(',');
-        QString productNameInFile = fields[1].trimmed();
+        QString productNameInFile = fields[0].trimmed();
         if (productNameInFile != productName) {
             // exclude the line corresponding to the product to be removed
             lines.append(line);
