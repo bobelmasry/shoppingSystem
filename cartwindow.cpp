@@ -4,7 +4,9 @@
 #include "qstandardpaths.h"
 #include <QFile>
 #include <QDebug>
-
+#include <QLabel>
+#include <QPushButton>
+#include <QHBoxLayout>
 
 double cartWindow::payment;
 
@@ -62,10 +64,29 @@ cartWindow::cartWindow(const QString& username, QWidget *parent)
                     QString field1Value = productFields[1].trimmed();
                     totalField1 += field1Value.toInt(); // Accumulate the value from fields[1]
                     QString productName = productFields[0].trimmed();
-                    QListWidgetItem *listItem = new QListWidgetItem(productName);
+                    QWidget *itemWidget = new QWidget();
+                    QHBoxLayout *layout = new QHBoxLayout(itemWidget);
+
+                    QLabel *label = new QLabel(productName);
+                    layout->addWidget(label);
+
+                    QPushButton *removeButton = new QPushButton("Remove");
+                    layout->addWidget(removeButton);
+
+                    connect(removeButton, &QPushButton::clicked, this, [=]() {
+                        qDebug() << "Remove button clicked for product:" << productName;
+                        removeProduct(productId, username);
+                    });
+
+                    QListWidgetItem *listItem = new QListWidgetItem();
+                    listItem->setSizeHint(itemWidget->sizeHint());
+
                     ui->listWidget->addItem(listItem);
+                    ui->listWidget->setItemWidget(listItem, itemWidget);
+
+
                 }
-            }
+                            }
 
             productFile.close();
             break;
@@ -76,6 +97,40 @@ cartWindow::cartWindow(const QString& username, QWidget *parent)
     qDebug()<<payment;
     file.close();
 }
+
+    void cartWindow::removeProduct(QString productId, const QString& username) {
+        QString desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+        QString filePath = desktopDir + "/users.txt";
+
+        QFile file(filePath);
+        if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            qDebug() << "Failed to open users.txt for writing:" << file.errorString();
+            return;
+        }
+
+        QString updatedContent;
+        QTextStream in(&file);
+        while (!in.atEnd()) {
+            QString line = in.readLine().trimmed();
+            QStringList fields = line.split(',');
+            if (fields.size() >= 1 && fields[0].trimmed() == username) {
+                QString shoppingCart = fields.size() >= 4 ? fields[3].trimmed() : "";
+                QStringList cartItems = shoppingCart.split('-', Qt::SkipEmptyParts);
+                cartItems.removeAll(productId);
+                updatedContent += fields[0].trimmed() + "," + fields[1].trimmed() + "," + fields[2].trimmed() + "," + cartItems.join('-') + "\n";
+            } else {
+                updatedContent += line + "\n";
+            }
+        }
+
+        file.seek(0);
+        file.write(updatedContent.toUtf8());
+
+        file.resize(file.pos());
+
+        file.close();
+    }
+
 
 
 cartWindow::~cartWindow()

@@ -15,6 +15,8 @@ public:
     static double payment;
     ~cartWindow();
     static void clear_cart(QString &username);
+    void removeProduct(QString productId, const QString& username);
+
 
 private slots:
     void on_pushButton_clicked();
